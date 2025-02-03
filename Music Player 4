@@ -249,7 +249,7 @@ local function drawMenu()
                 if progresslast == nil then progresslast = progress end
                 
                 -- Ensure correct precedence by grouping conditions
-                if input.isKeyDown(KEY.E) and wait != true and progresslast == progress and localposy > 60 then
+                if input.isKeyDown(KEY.R) and wait != true and progresslast == progress and localposy > 60 then
                     if down2 == nil then down2 = false end
                     if down2 != true then
                         down2 = true
@@ -291,7 +291,7 @@ local function drawMenu()
         
         -- If mouse is held, check if it's dragging the handle
         if scrolling == nil then scrolling = false end
-        if (input.isMouseDown(MOUSE.MOUSE1) or input.isKeyDown(KEY.E)) and localposx != nil then
+        if (input.isMouseDown(MOUSE.MOUSE1) or input.isKeyDown(KEY.R)) and localposx != nil then
             if isDragging or (localposx >= sliderX-5 and localposx <= sliderX + sliderWidth+5 
                 and localposy >= sliderY and localposy <= sliderY + sliderHeight) and scrolling == false then
                 isDragging = true
@@ -378,9 +378,9 @@ hook.add("render","render_gui_stuff",function()
             else
                 render.drawText(256, 256 - 128, "Music Player by Naki", 1)
                 render.drawText(256, 256 - 32, "Controls:", 1)
-                render.drawText(256, 256 + 0, "Mouse1/E - Interact with most buttons", 1)
+                render.drawText(256, 256 + 0, "Mouse1/R - Interact with most buttons", 1)
                 render.drawText(256, 256 + 32, "Mouse1 (Hold & Move) - Scroll song list", 1)
-                render.drawText(256, 256 + 64, "E - Select song in song list", 1)
+                render.drawText(256, 256 + 64, "R - Select song in song list", 1)
                 render.drawText(256, 256 + 128, "Open song list from the top left corner!", 1)
             end
             
@@ -476,7 +476,7 @@ hook.add("render","render_gui_stuff",function()
         local localposx, localposy = render.cursorPos(player(), screenEnt)
         if localposx != nil then
             --render.drawText(localposx,localposy,math.ceil(localposx).." "..math.ceil(localposy),1)
-            if (input.isMouseDown(MOUSE.MOUSE1) or input.isKeyDown(KEY.E)) and menumoving != true then
+            if (input.isMouseDown(MOUSE.MOUSE1) or input.isKeyDown(KEY.R)) and menumoving != true then
                 if down == nil then down = false end
                 if down != true then
                     down = true
