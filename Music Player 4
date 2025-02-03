@@ -479,7 +479,7 @@ hook.add("render","render_gui_stuff",function()
                         openMenu()
                     end
                     local boxdata = {Vector(48/1.35+10+48,48/1.35,0),Vector(48,48,0)}
-                    render.drawRect(boxdata[1].x-boxdata[2].x/2,boxdata[1].y-boxdata[2].y/2,boxdata[2].x,boxdata[2].y)
+                    --render.drawRect(boxdata[1].x-boxdata[2].x/2,boxdata[1].y-boxdata[2].y/2,boxdata[2].x,boxdata[2].y)
                     if inbox(boxdata) then
                         if _snd != nil and _snd:isValid() then
                             if not _snd:isPaused() then
