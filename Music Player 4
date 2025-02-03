@@ -372,7 +372,7 @@ hook.add("render","render_gui_stuff",function()
                 render.drawText(256, 256 - 128, "Music Player by Naki", 1)
                 render.drawText(256, 256 - 32, "Controls:", 1)
                 render.drawText(256, 256 + 0, "Mouse1/E - Interact with most buttons", 1)
-                render.drawText(256, 256 + 32, "Mouse1 - Scroll in song list", 1)
+                render.drawText(256, 256 + 32, "Mouse1 (Hold & Move) - Scroll song list", 1)
                 render.drawText(256, 256 + 64, "E - Select song in song list", 1)
                 render.drawText(256, 256 + 128, "Open song list from the top left corner!", 1)
             end
