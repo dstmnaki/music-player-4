@@ -166,6 +166,8 @@ local function openMenu()
     if menuOpen != false then
         menuOpen = false
         menuMoveCT = timer.curtime()
+        scroll=0
+        localposystore=0
     else
         menuOpen = true
         menuMoveCT = timer.curtime()
@@ -188,12 +190,7 @@ local function drawMenu()
     local menuMoveMath = menuOpenToFloat * progress + (1 - menuOpenToFloat) * (1 - progress)
     local menuPos = Vector(-512 + 512 * menuMoveMath, 0, 0)
     
-    
-    if progress == 0 and menuOpen == false then
-        scroll=0
-        localposystore=0
-    end
-    if progress != 0 then
+    --if progress != 0 then
         
         -- Get cursor position relative to the screen
         local localposx, localposy = render.cursorPos(player(), screenEnt)
@@ -284,7 +281,7 @@ local function drawMenu()
                 -- Store progress for next frame
                 progresslast = progress
             end
-        end
+        --end
         
         if volume == nil then volume = 1 end
         -- Line 222: Volume Slider Code
