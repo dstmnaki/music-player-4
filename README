@@ -5,7 +5,7 @@ you can add songs to the included library nakilibs/musicplayer4/tracklist.txt wi
 
 Controls are displayed on the screen but i will list them here as well
 Mouse1/R - Interact with most buttons
-Mouse1 - Scroll in song list
+Mouse1 (Hold & Move) - Scroll song list
 R - Select song in song list
 
 Commands (untested on current release)
