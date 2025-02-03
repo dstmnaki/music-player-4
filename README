@@ -8,8 +8,6 @@ Mouse1/R - Interact with most buttons
 Mouse1 - Scroll in song list
 R - Select song in song list
 
-Left top box toggles the song list, slider adjusts volume
-
 Commands (untested on current release)
 !play <id/url> <number/string>
 !volume <number> (0-100)
