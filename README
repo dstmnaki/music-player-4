@@ -4,9 +4,9 @@ you can add songs to the included library nakilibs/musicplayer4/tracklist.txt wi
 "table.insert(tracks, {"URL", "NAME"})"
 
 Controls are displayed on the screen but i will list them here as well
-Mouse1/E - Interact with most buttons
+Mouse1/R - Interact with most buttons
 Mouse1 - Scroll in song list
-E - Select song in song list
+R - Select song in song list
 
 Left top box toggles the song list, slider adjusts volume
 
