@@ -312,8 +312,6 @@ local function drawMenu()
         render.setColor(Color(0,0,0,255))
         render.drawRoundedBox(10,512-100+4,48/4+4,90-8,40)
         
-        -- Show volume percentage
-        render.drawText(sliderX + sliderWidth + 105, sliderY - 5, string.format("%.0f%%", volume * 100), TEXT_ALIGN.CENTER)
         
         render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
         render.drawRoundedBox(15,48/4,48/4,48,48)
@@ -333,6 +331,9 @@ local function drawMenu()
         
         render.setMaterial(arrow)
         render.drawTexturedRect(48/4+8+48+10,48/4+8,32,32,0)
+        
+        -- Show volume percentage
+        render.drawText(sliderX + sliderWidth + 105, sliderY - 5, string.format("%.0f%%", volume * 100), TEXT_ALIGN.CENTER)
         
     end
 end
