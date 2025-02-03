@@ -189,14 +189,6 @@ local function drawMenu()
     local menuPos = Vector(-512 + 512 * menuMoveMath, 0, 0)
     
     
-    render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
-    render.drawRoundedBoxEx(15, menuPos.x, menuPos.y, 512, 512, false, true, false, true)
-    
-    render.setColor(Color(0,0,0))
-    render.drawRoundedBoxEx(10, menuPos.x, menuPos.y+5, 512-5, 512-10, false, true, false, true)
-    
-    
-    
     if progress == 0 and menuOpen == false then
         scroll=0
         localposystore=0
@@ -294,15 +286,14 @@ local function drawMenu()
             isDragging = false
         end
         
-        
+            
         render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
-        render.drawRoundedBoxEx(15, menuPos.x, menuPos.y+512-5, 480, 5, false, false, false, true)
+        --render.drawRoundedBoxEx(15, menuPos.x, menuPos.y+512-5, 480, 5, false, false, false, true)
         
-        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
-        render.drawRoundedBoxEx(10, menuPos.x, menuPos.y, 512, 60, false, true, false, false)
+        render.drawRoundedBoxEx(15, 0, menuPos.y, 512, 70, false, true, false, true)
         
         render.setColor(Color(0,0,0))  -- Example gray color
-        render.drawRoundedBoxEx(10, menuPos.x, menuPos.y+5, 512-5, 60, false, true, false, false)
+        render.drawRoundedBoxEx(10, 0, menuPos.y+5, 512-5, 60, false, true, false, true)
         
         -- Draw slider background (using one of your predefined colors)
         render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- Example gray color
@@ -316,14 +307,12 @@ local function drawMenu()
         render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
         render.drawRoundedBox(5, handleX-handleRadius/2, sliderY-handleRadius/2 + sliderHeight / 2, handleRadius, handleRadius)
         
-        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
         render.drawRoundedBox(15,512-100,48/4,90,48)
         
         render.setColor(Color(0,0,0,255))
         render.drawRoundedBox(10,512-100+4,48/4+4,90-8,40)
         
         -- Show volume percentage
-        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
         render.drawText(sliderX + sliderWidth + 105, sliderY - 5, string.format("%.0f%%", volume * 100), TEXT_ALIGN.CENTER)
         
         render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
@@ -342,7 +331,6 @@ local function drawMenu()
         render.setMaterial(menuTex)
         render.drawTexturedRect(48/4+8,48/4+8,32,32,0)
         
-        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
         render.setMaterial(arrow)
         render.drawTexturedRect(48/4+8+48+10,48/4+8,32,32,0)
         
