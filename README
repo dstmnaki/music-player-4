@@ -1,0 +1,18 @@
+Here's my music player project for starfall, garry's mod
+
+you can define songs on line 61 using specified format, no need to worry about sorting, the code auto sorts by alphabet
+
+Controls are displayed on the screen but i will list them here as well
+Mouse1/E - Interact with most buttons
+Mouse1 - Scroll in song list
+E - Select song in song list
+
+Left top box toggles the song list, slider adjusts volume
+
+Commands (untested on current release)
+!play <id/url> <number/string>
+!volume <number> (0-100)
+
+Requirements
+Starfall
+https://github.com/thegrb93/StarfallEx
