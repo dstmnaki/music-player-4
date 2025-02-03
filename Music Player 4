@@ -503,6 +503,11 @@ hook.add("render","render_gui_stuff",function()
             end
         end
         drawMenu()
+        if localposx != nil then
+            render.drawRect(localposx-4, localposy-4, 8, 8)
+            render.setColor(Color(75,75,75))
+            render.drawRectOutline(localposx-5, localposy-5, 10, 10, 2)
+        end
     end
 end)
 end
