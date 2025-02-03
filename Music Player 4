@@ -211,12 +211,12 @@ local function drawMenu()
                 end
             end
             
-            local menuHeight = 512 - 120  -- Height where the list disappears sooner
+            local menuHeight = 512 - 60  -- Height where the list disappears sooner
             local itemHeight = 35 + 15  -- Height per item including spacing
             local startIndex = math.max(1, math.floor(scroll / itemHeight))  -- First visible item
             local endIndex = math.min(#getTrackList, math.ceil((scroll + menuHeight) / itemHeight))  -- Last visible item
             
-            local fadeStart = scroll + menuHeight + 512/1.5  -- Where fading begins
+            local fadeStart = scroll + menuHeight + 512/2  -- Where fading begins
             local fadeEnd = fadeStart + (itemHeight * 4)  -- Fading fully disappears after 4 items
             
             for i = startIndex, endIndex do
@@ -228,14 +228,18 @@ local function drawMenu()
                 -- Adjusted fade calculation across multiple items
                 local fadeFactor = math.min(1, math.max(0, (fadeEnd - (yPos + itemHeight * i)) / (fadeEnd - fadeStart)))
                 local alpha = (1-fadeFactor) * 255  -- Scale from 0 to 255
-            
+                local alpha2 = fadeFactor * 255  -- Scale from 0 to 255
+                
                 -- Apply alpha to HSV color
                 local colorRGB = Color((timer.curtime() * 10 + 180) % 360 - 180, 1, 1):hsvToRGB()
+                colorRGB.a = alpha2
                 render.setColor(colorRGB)
                 render.drawRoundedBox(15, -25 + menuPos.x + sinOffset - alpha, yPos, 512 - 25, 48)
             
                 -- Adjust black background fade for visibility
-                render.setColor(Color(0, 0, 0))
+                local colorblack = Color(0, 0, 0)
+                colorblack.a = math.clamp(alpha2 * 5, 0, 255)  -- Make background fade more dramatic
+                render.setColor(colorblack)
                 render.drawRoundedBox(10, -25 + 4 + menuPos.x + sinOffset - alpha, yPos + 4, 512 - 8 - 25, 40)
             
                 -- Apply text with alpha fade
