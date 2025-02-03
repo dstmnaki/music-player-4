@@ -1,6 +1,7 @@
 Here's my music player project for starfall, garry's mod
 
-you can define songs on line 61 using specified format, no need to worry about sorting, the code auto sorts by alphabet
+you can add songs to the included library nakilibs/musicplayer4/tracklist.txt with the following format
+"table.insert(tracks, {"URL", "NAME"})"
 
 Controls are displayed on the screen but i will list them here as well
 Mouse1/E - Interact with most buttons
