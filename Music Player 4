@@ -190,24 +190,24 @@ local function drawMenu()
     local menuMoveMath = menuOpenToFloat * progress + (1 - menuOpenToFloat) * (1 - progress)
     local menuPos = Vector(-512 + 512 * menuMoveMath, 0, 0)
     
-    --if progress != 0 then
-        
-        -- Get cursor position relative to the screen
-        local localposx, localposy = render.cursorPos(player(), screenEnt)
-        if scroll == nil then scroll = 0 end
-        if localposystore == nil then localposystore = 0 end
-        if isDragging == nil then isDragging = false end
-        if getTrackList != nil then
-            if localposy != nil and menuOpen == true then
-                if input.isMouseDown(MOUSE.MOUSE1) and isDragging == false then
-                    scroll=math.clamp(localposystore-localposy,0,35/2+(15+35)*table.count(getTrackList))
-                    scrolling = true
-                else
-                    localposystore=localposy+scroll
-                    scrolling = false
-                end
+    local dontHide = not (menuOpen == false and progress == 1)
+    
+    -- Get cursor position relative to the screen
+    local localposx, localposy = render.cursorPos(player(), screenEnt)
+    if scroll == nil then scroll = 0 end
+    if localposystore == nil then localposystore = 0 end
+    if isDragging == nil then isDragging = false end
+    if getTrackList != nil then
+        if localposy != nil and menuOpen == true then
+            if input.isMouseDown(MOUSE.MOUSE1) and isDragging == false then
+                scroll=math.clamp(localposystore-localposy,0,35/2+(15+35)*table.count(getTrackList))
+                scrolling = true
+            else
+                localposystore=localposy+scroll
+                scrolling = false
             end
-            
+        end
+        if dontHide then
             local menuHeight = 512 - 60  -- Height where the list disappears sooner
             local itemHeight = 35 + 15  -- Height per item including spacing
             local startIndex = math.max(1, math.floor(scroll / itemHeight))  -- First visible item
@@ -244,7 +244,7 @@ local function drawMenu()
                 local ExtraText = song[2]:sub(36, 36) ~= "" and "..." or ""
                 render.drawText(20 + menuPos.x + sinOffset - alpha, yPos + 10, song[2]:sub(1, 33) .. ExtraText, TEXT_ALIGN.LEFT)
             end
-            
+        
             if localposy != nil and progress == 1 then
                 if progresslast == nil then progresslast = progress end
                 
@@ -277,11 +277,10 @@ local function drawMenu()
                 else
                     down2 = false
                 end
-            
-                -- Store progress for next frame
-                progresslast = progress
             end
-        --end
+            -- Store progress for next frame
+            progresslast = progress
+        end
         
         if volume == nil then volume = 1 end
         -- Line 222: Volume Slider Code
