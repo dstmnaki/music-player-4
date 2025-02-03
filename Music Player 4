@@ -171,6 +171,13 @@ local function openMenu()
         menuMoveCT = timer.curtime()
     end
 end
+    local menuTex = material.create("UnlitGeneric")
+    local menuTex2 = material.createFromImage("icon16/folder.png", "alphatest")
+    menuTex:setTexture("$basetexture", menuTex2:getName())
+    
+    local arrow = material.create("UnlitGeneric")
+    local arrow2 = material.createFromImage("icon16/control_end.png", "alphatest")
+    arrow:setTexture("$basetexture", arrow2:getName())
 local function drawMenu()
     if menuOpen == nil then menuOpen = false end
     if menuMoveCT == nil then menuMoveCT = timer.curtime()-1 end
@@ -318,12 +325,27 @@ local function drawMenu()
         -- Show volume percentage
         render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
         render.drawText(sliderX + sliderWidth + 105, sliderY - 5, string.format("%.0f%%", volume * 100), TEXT_ALIGN.CENTER)
-            
+        
         render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
         render.drawRoundedBox(15,48/4,48/4,48,48)
         
         render.setColor(Color(0,0,0,255))
         render.drawRoundedBox(10,48/4+4,48/4+4,40,40)
+        
+        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
+        render.drawRoundedBox(15,48/4+48+10,48/4,48,48)
+        
+        render.setColor(Color(0,0,0,255))
+        render.drawRoundedBox(10,48/4+48+10+4,48/4+4,40,40)
+        
+        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
+        render.setMaterial(menuTex)
+        render.drawTexturedRect(48/4+8,48/4+8,32,32,0)
+        
+        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
+        render.setMaterial(arrow)
+        render.drawTexturedRect(48/4+8+48+10,48/4+8,32,32,0)
+        
     end
 end
 hook.add("think","",function()
@@ -359,85 +381,87 @@ hook.add("render","render_gui_stuff",function()
     
         
         if snd != nil and isValid(snd) then
-            if wait != false then
-                wait = false
-            end
-            
-            local n = 64
-            local scrnw = 512
-            local fft = snd:getFFT(n)
-    
-            local nextbuffer = (buffernum%#buffers)+1
-            
-            
-            alpha = alpha + 0.1
-            alpha = math.clamp(alpha,0,1)
-            
-            alpha2 = alpha2 + 0.01
-            alpha2 = math.clamp(alpha2,0,1)
-            
-            if alpha2 >= 1 then
-                alpha3 = alpha3 + 0.02
-                alpha3 = math.clamp(alpha3,0,1)
-            end
-            if alpha2 >= 1 then
-                if playing == false then
-                    playing = true
-                    if volume == nil then volume = 1 end
-                    snd:setVolume(volume)
-                    snd:setTime(0)
+            if not snd:isPaused() then
+                if wait != false then
+                    wait = false
                 end
-            end
-            
-            render.setRenderTargetTexture(buffers[buffernum])
-            render.selectRenderTarget(buffers[nextbuffer])
-            render.clear(Color(0,0,0,255))
-            render.setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha3):hsvToRGB())
-            render.pushMatrix(centerTransform)
-            
-            if fft != nil then
-                for i=1, n do
-                    local current = fft[i+1]
-                    local next = fft[i]
-                    
-                    local width = scrnw/n
-                    local pos = -(scrnw)+(((scrnw*2)/n)*(i-0.5))
-                    local x = width+pos
-                    local y = 5
-                    local lx = width+pos
-                    local ly = (current*512)
-                    
-                    render.drawRect(x,y,width,ly)
+                
+                local n = 64
+                local scrnw = 512
+                local fft = snd:getFFT(n)
+        
+                local nextbuffer = (buffernum%#buffers)+1
+                
+                
+                alpha = alpha + 0.1
+                alpha = math.clamp(alpha,0,1)
+                
+                alpha2 = alpha2 + 0.01
+                alpha2 = math.clamp(alpha2,0,1)
+                
+                if alpha2 >= 1 then
+                    alpha3 = alpha3 + 0.02
+                    alpha3 = math.clamp(alpha3,0,1)
                 end
+                if alpha2 >= 1 then
+                    if playing == false then
+                        playing = true
+                        if volume == nil then volume = 1 end
+                        snd:setVolume(volume)
+                        snd:setTime(0)
+                    end
+                end
+                
+                render.setRenderTargetTexture(buffers[buffernum])
+                render.selectRenderTarget(buffers[nextbuffer])
+                render.clear(Color(0,0,0,255))
+                render.setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha3):hsvToRGB())
+                render.pushMatrix(centerTransform)
+                
+                if fft != nil then
+                    for i=1, n do
+                        local current = fft[i+1]
+                        local next = fft[i]
+                        
+                        local width = scrnw/n
+                        local pos = -(scrnw)+(((scrnw*2)/n)*(i-0.5))
+                        local x = width+pos
+                        local y = 5
+                        local lx = width+pos
+                        local ly = (current*512)
+                        
+                        render.drawRect(x,y,width,ly)
+                    end
+                end
+                local length = snd:getLength()
+                local time = snd:getTime()
+                if playing == true then
+                    progresspercent = 1-((length-time)/length)
+                else
+                    progresspercent = 0
+                end
+                
+                render.setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha3):hsvToRGB())
+                
+                render.drawRoundedBox(8,-500,-4,500*progresspercent*2,5)
+                
+                render.setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha):hsvToRGB())
+                render.drawText(0, -55, name, 1)
+                
+                render.popMatrix()
+                render.selectRenderTarget()
+                
+                render.setColor(Color(255, 255, 255, 255))
+                render.setRenderTargetTexture(buffers[nextbuffer])
+                render.drawTexturedRect(0, 0, 512, 512)
+                holoStore:setPos(screenEnt:getPos()-screenEnt:getUp()*150)
+                holoStore:setAngles(Angle(35*math.sin(timer.systime()*360/1000),timer.systime()*5,35*math.cos(timer.systime()*90/1000)))
+                holoStore:setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha):hsvToRGB())
+                holoStore:draw()
+                
+                --render.selectRenderTarget()
+                buffernum = nextbuffer
             end
-            local length = snd:getLength()
-            local time = snd:getTime()
-            if playing == true then
-                progresspercent = 1-((length-time)/length)
-            else
-                progresspercent = 0
-            end
-            
-            render.setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha3):hsvToRGB())
-            
-            render.drawRoundedBox(8,-500,-4,500*progresspercent*2,5)
-            
-            render.setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha):hsvToRGB())
-            render.drawText(0, -55, name, 1)
-            
-            render.popMatrix()
-            render.selectRenderTarget()
-            
-            render.setColor(Color(255, 255, 255, 255))
-            render.setRenderTargetTexture(buffers[nextbuffer])
-            render.drawTexturedRect(0, 0, 512, 512)
-            holoStore:setPos(screenEnt:getPos()-screenEnt:getUp()*150)
-            holoStore:setAngles(Angle(35*math.sin(timer.systime()*360/1000),timer.systime()*5,35*math.cos(timer.systime()*90/1000)))
-            holoStore:setColor(Color((timer.curtime()*10+180)%360-180, 1, alpha):hsvToRGB())
-            holoStore:draw()
-            
-            --render.selectRenderTarget()
-            buffernum = nextbuffer
         end
         
         if wait == nil then wait = false end
@@ -449,11 +473,21 @@ hook.add("render","render_gui_stuff",function()
                 if down == nil then down = false end
                 if down != true then
                     down = true
-                    local boxdata = {Vector(48,48,0),Vector(48,48,0)}
+                    local boxdata = {Vector(48/1.35,48/1.35,0),Vector(48,48,0)}
                     --render.drawRect(boxdata[1].x-boxdata[2].x/2,boxdata[1].y-boxdata[2].y/2,boxdata[2].x,boxdata[2].y)
                     if inbox(boxdata) then
                         openMenu()
-                        --previousSong()
+                    end
+                    local boxdata = {Vector(48/1.35+10+48,48/1.35,0),Vector(48,48,0)}
+                    render.drawRect(boxdata[1].x-boxdata[2].x/2,boxdata[1].y-boxdata[2].y/2,boxdata[2].x,boxdata[2].y)
+                    if inbox(boxdata) then
+                        if _snd != nil and _snd:isValid() then
+                            if not _snd:isPaused() then
+                                _snd:pause()
+                            else
+                                _snd:play()
+                            end
+                        end
                     end
                     
                 end
