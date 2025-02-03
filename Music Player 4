@@ -374,7 +374,17 @@ hook.add("render","render_gui_stuff",function()
         else
             render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
             if wait then
-                render.drawText(256, 256 - 32, "Now loading track...", 1)
+                if time == nil or timer.curtime()-time > 1 then time = timer.curtime() end
+                if timer.curtime()-time < 0.33 then
+                    addText = "."
+                elseif timer.curtime()-time < 0.66 then
+                    addText = ".."
+                elseif timer.curtime()-time < 0.99 then
+                    addText = "..."
+                else
+                    addText="..."
+                end
+                render.drawText(256, 256 - 32, "Now loading track"..addText, 1)
             else
                 render.drawText(256, 256 - 128, "Music Player by Naki", 1)
                 render.drawText(256, 256 - 32, "Controls:", 1)
