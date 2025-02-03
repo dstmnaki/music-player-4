@@ -503,10 +503,21 @@ hook.add("render","render_gui_stuff",function()
             end
         end
         drawMenu()
+        local colorRGB = Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB()
         if localposx != nil then
-            render.drawRect(localposx-4, localposy-4, 8, 8)
-            render.setColor(Color(75,75,75))
-            render.drawRectOutline(localposx-5, localposy-5, 10, 10, 2)
+            if hideCursorLast == nil then hideCursorLast=Vector(localposx,localposy,0) end
+            if hideCursorCT == nil then hideCursorCT=timer.curtime() end
+            if hideCursorLast != Vector(localposx,localposy,0) then hideCursorCT = timer.curtime() end
+            if timer.curtime() - hideCursorCT > 1 then hideCursor = true else hideCursor = false end
+            if timer.curtime() - hideCursorCT <= 2 then
+                local alphaMod = 255-255*math.clamp(-1+(timer.curtime() - hideCursorCT),0,1)
+                colorRGB.a = alphaMod
+                render.setColor(colorRGB)
+                render.drawRect(localposx-4, localposy-4, 8, 8)
+                render.setColor(Color(75,75,75,alphaMod))
+                render.drawRectOutline(localposx-5, localposy-5, 10, 10, 2)
+            end
+            hideCursorLast=Vector(localposx,localposy,0)
         end
     end
 end)
