@@ -22,12 +22,20 @@ https://github.com/thegrb93/StarfallEx
 
 INSTRUCTIONS:
 
-FOR ADVDUPE2 FILE SKIP TO SECTION 5 AND CONTINUE ALONG TO USAGE
+MANUAL SETUP
 
 1. Save the library file in your sf folder with the following file structure (STARFALL FOLDER HERE)/nakilibs/musicplayer4/tracklist.txt
 2. Spawn the main starfall (Music Player 4)
 3. Spawn a starfall component screen, make sure it's a box or 1:1 resolution screen i.e models/hunter/plates/plate1x1.mdl
 4. Link the screen to the starfall
+5. Grant perms by clicking E on the screen
+
+ADVANCED DUPLICATOR 2 SETUP
+
+1. Save the advdupe2 file
+2. Place it in garry's mod/garry's mod/data/advdupe2/(you can make your own folder for my stuff here if you so wish)
+3. IF in game, press the refresh button in the advanced duplicator 2's menu at the top (2 green arrows forming a circle)
+4. Spawn the dupe by double clicking the file and left clicking on the ground
 5. Grant perms by clicking E on the screen
 
 
