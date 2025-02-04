@@ -1,31 +1,9 @@
 --@name Music Player 4
 --@author Naki
 --@include nakilibs/musicplayer4/tracklist.txt
---@shared
+--@client
 
-if SERVER then
-    hook.add("PlayerSay", "Hey", function(ply, txt)
-        if txt:sub(1, 9)=="!play id " and ply==owner() then
-            net.start("playSong")
-            net.writeString(string.explode(" ", txt, nil)[3])
-            net.send()
-        
-            return ""
-        elseif txt:sub(1, 10)=="!play url " and ply==owner() then
-            net.start("playSongUrl")
-            net.writeString(string.explode(" ", txt, nil)[3])
-            net.send()
-        
-            return ""
-        elseif txt:sub(1, 8)=="!volume " then
-            net.start("setVolume")
-            net.writeString(txt:sub(9))
-            net.send()
-
-            return ""
-        end
-    end)
-end
+if CLIENT then
 parent = chip()
 
 holoStore = hologram.create(parent:localToWorld(Vector(0,0,0)), parent:localToWorldAngles(Angle(0,0,0)), "models/holograms/icosphere2.mdl", Vector(25))
@@ -37,7 +15,6 @@ holoStore:setNoDraw(true)
 local centerTransform = Matrix()
 centerTransform:setTranslation(Vector(x, y, 0)/2)
 
-if CLIENT then
 require("nakilibs/musicplayer4/tracklist.txt")
 tracksSORTED = {}
 function sortByName(t)
@@ -84,33 +61,7 @@ local track = getTrackList[songid]
 local url = track[1]
 local name = track[2]
 local _snd
-net.receive("playSong", function(len)
-    id = tonumber(net.readString())
-    if not hasPermission("bass.loadURL", url) then
-        return
-    end
-    local volume = volume or 1
-    local getTrackList = tracklist()
-    local track = getTrackList[id]
-    local url = track[1]
-    local name = track[2]
-    playURL(url,name)
-end)
-net.receive("playSongUrl", function(len)
-    if not hasPermission("bass.loadURL", url) then
-        return
-    end
-    local volume = volume or 1
-    local url = net.readString()
-    local name = "Playing from URL"
-    playURL(url,name)
-end)
-net.receive("setVolume", function(len)
-    vol = tonumber(net.readString())
-    if _snd && _snd:isValid() then
-        _snd:setVolume(vol / 100)
-    end
-end)
+
 function playURL(url2,name)
     print("Now playing "..name)
     wait=true
