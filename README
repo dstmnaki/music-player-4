@@ -22,11 +22,13 @@ https://github.com/thegrb93/StarfallEx
 
 INSTRUCTIONS:
 
-Save the library file in your sf folder with the following file structure (STARFALL FOLDER HERE)/nakilibs/musicplayer4/tracklist.txt
-Spawn the main starfall (Music Player 4)
-Spawn a starfall component screen, make sure it's a box or 1:1 resolution screen i.e models/hunter/plates/plate1x1.mdl
-Link the screen to the starfall
-Grant perms by clicking E on the screen
+FOR ADVDUPE2 FILE SKIP TO SECTION 5 AND CONTINUE ALONG TO USAGE
+
+1. Save the library file in your sf folder with the following file structure (STARFALL FOLDER HERE)/nakilibs/musicplayer4/tracklist.txt
+2. Spawn the main starfall (Music Player 4)
+3. Spawn a starfall component screen, make sure it's a box or 1:1 resolution screen i.e models/hunter/plates/plate1x1.mdl
+4. Link the screen to the starfall
+5. Grant perms by clicking E on the screen
 
 
 USAGE (See controls above):
