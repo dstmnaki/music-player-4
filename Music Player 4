@@ -418,15 +418,16 @@ hook.add("render","render_gui_stuff",function()
                     for i=1, n do
                         local current = fft[i+1]
                         local next = fft[i]
-                        
-                        local width = scrnw/n
-                        local pos = -(scrnw)+(((scrnw*2)/n)*(i-0.5))
-                        local x = width+pos
-                        local y = 5
-                        local lx = width+pos
-                        local ly = (current*512)
-                        
-                        render.drawRect(x,y,width,ly)
+                        if current != nil and next != nil then
+                            local width = scrnw/n
+                            local pos = -(scrnw)+(((scrnw*2)/n)*(i-0.5))
+                            local x = width+pos
+                            local y = 5
+                            local lx = width+pos
+                            local ly = (current*512)
+                            
+                            render.drawRect(x,y,width,ly)
+                        end
                     end
                 end
                 local length = snd:getLength()
