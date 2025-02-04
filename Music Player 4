@@ -320,7 +320,6 @@ local function drawMenu()
         -- If mouse is held, check if it's dragging the handle
         if scrolling == nil then scrolling = false end
         if input.isMouseDown(MOUSE.MOUSE1) and localposx != nil then
-            print(scrolling)
             if isDragging or (localposx >= sliderX-5 and localposx <= sliderX + sliderWidth+5 
                 and localposy >= sliderY and localposy <= sliderY + sliderHeight) and scrolling == false then
                 isDragging = true
