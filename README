@@ -18,3 +18,19 @@ you can add songs to the included library nakilibs/musicplayer4/tracklist.txt wi
 Requirements
 Starfall
 https://github.com/thegrb93/StarfallEx
+
+
+INSTRUCTIONS:
+
+Save the library file in your sf folder with the following file structure (STARFALL FOLDER HERE)/nakilibs/musicplayer4/tracklist.txt
+Spawn the main starfall (Music Player 4)
+Spawn a starfall component screen, make sure it's a box or 1:1 resolution screen i.e models/hunter/plates/plate1x1.mdl
+Link the screen to the starfall
+Grant perms by clicking E on the screen
+
+USAGE (See controls above):
+Click on the folder icon to view song list
+Hold down mouse1 and move your mouse up or down to scroll
+Double click on a song to play it
+Click Play/Pause button if you want to pause the song
+Adjust volume using the slider at the top (Hold mouse1 and move mouse left or right along the slider)
