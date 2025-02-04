@@ -1,16 +1,19 @@
 Here's my music player project for starfall, garry's mod
 
-you can add songs to the included library nakilibs/musicplayer4/tracklist.txt with the following format
-"table.insert(tracks, {"URL", "NAME"})"
+Features:
+*Visualizer
+*Easy-to-Use GUI
+*Song list
+*Play/Pause button
+*Volume Slider
 
 Controls are displayed on the screen but i will list them here as well
-Mouse1/R - Interact with most buttons
+Mouse1 - Interact with buttons
 Mouse1 (Hold & Move) - Scroll song list
-R - Select song in song list
+Mouse1 (Double Tap) - Select song
 
-Commands (untested on current release)
-!play <id/url> <number/string>
-!volume <number> (0-100)
+you can add songs to the included library nakilibs/musicplayer4/tracklist.txt with the following format
+"table.insert(tracks, {"URL", "NAME"})"
 
 Requirements
 Starfall
