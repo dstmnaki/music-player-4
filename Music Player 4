@@ -348,7 +348,7 @@ hook.add("render","render_gui_stuff",function()
         if not permissionSatisfied then
             render.drawText(256, 256 - 32, "IF you run out of ram, use this command", 1)
             render.drawText(256, 256, "*sf_timebuffer_cl 0.1*", 1)
-            render.drawText(256, 256 - 128, "GRANT ME PERMS FOR MUSIC", 1)
+            render.drawText(256, 256 - 128, "GRANT ME PERMS FOR MUSIC (PRESS E)", 1)
             return
         else
             render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())
