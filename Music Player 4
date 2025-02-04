@@ -198,7 +198,7 @@ local function drawMenu()
     if localposystore == nil then localposystore = 0 end
     if isDragging == nil then isDragging = false end
     if getTrackList != nil then
-        if localposy != nil and menuOpen == true then
+        if localposy != nil and menuOpen == true and localposy > 60*(scrolling and 0 or 1) then
             if input.isMouseDown(MOUSE.MOUSE1) and isDragging == false then
                 scroll=math.clamp(localposystore-localposy,0,35/2+(15+35)*table.count(getTrackList))
                 scrolling = true
