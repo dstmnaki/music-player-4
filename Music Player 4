@@ -136,11 +136,14 @@ local function drawMenu()
     if menuOpen == nil then menuOpen = false end
     if menuMoveCT == nil then menuMoveCT = timer.curtime()-1 end
     local menuOpenToFloat = menuOpen and 1 or 0  -- Now it represents the target state correctly
-    local progress = math.clamp((timer.curtime() - menuMoveCT) * 5, 0, 1)
+    local progress = math.clamp((timer.curtime() - menuMoveCT) * 3, 0, 1)
+    local progressSongList = math.easeInBack(math.clamp((timer.curtime() - menuMoveCT) * 3, 0, 1))
     
     -- Lerp between closed (-512) and open (0) positions
     local menuMoveMath = menuOpenToFloat * progress + (1 - menuOpenToFloat) * (1 - progress)
     local menuPos = Vector(-512 + 512 * menuMoveMath, 0, 0)
+    local songMoveMath = menuOpenToFloat * progressSongList + (1 - menuOpenToFloat) * (1 - progressSongList)
+    local songList = Vector(-512 + 512 * songMoveMath, 0, 0)
     
     local dontHide = not (menuOpen == false and progress == 1)
     
@@ -183,18 +186,18 @@ local function drawMenu()
                 local colorRGB = Color((timer.curtime() * 10 + 180) % 360 - 180, 1, 1):hsvToRGB()
                 colorRGB.a = alpha2
                 render.setColor(colorRGB)
-                render.drawRoundedBox(15, -25 + menuPos.x + sinOffset - alpha, yPos, 512 - 25, 48)
+                render.drawRoundedBox(15, -75 + songList.x + sinOffset - alpha, yPos, 512 + 20, 48)
             
                 -- Adjust black background fade for visibility
                 local colorblack = Color(0, 0, 0)
                 colorblack.a = math.clamp(alpha2 * 5, 0, 255)  -- Make background fade more dramatic
                 render.setColor(colorblack)
-                render.drawRoundedBox(10, -25 + 4 + menuPos.x + sinOffset - alpha, yPos + 4, 512 - 8 - 25, 40)
+                render.drawRoundedBox(10, -75 + 4 + songList.x + sinOffset - alpha, yPos + 4, 512 - 8 + 20, 40)
             
                 -- Apply text with alpha fade
                 render.setColor(colorRGB)
                 local ExtraText = song[2]:sub(36, 36) ~= "" and "..." or ""
-                render.drawText(20 + menuPos.x + sinOffset - alpha, yPos + 10, song[2]:sub(1, 33) .. ExtraText, TEXT_ALIGN.LEFT)
+                render.drawText(20 + songList.x + sinOffset - alpha, yPos + 10, song[2]:sub(1, 33) .. ExtraText, TEXT_ALIGN.LEFT)
             end
             if secondPressCT != nil then
                 if timer.curtime()-secondPressCT > 0.3 then
