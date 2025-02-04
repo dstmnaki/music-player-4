@@ -147,6 +147,8 @@ local function drawMenu()
     
     local dontHide = not (menuOpen == false and progress == 1)
     
+    menumoving = progress != 1
+    
     -- Get cursor position relative to the screen
     local localposx, localposy = render.cursorPos(player(), screenEnt)
     if scroll == nil then scroll = 0 end
