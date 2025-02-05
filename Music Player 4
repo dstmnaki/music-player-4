@@ -346,6 +346,7 @@ hook.add("think","",function()
 end)
 hook.add("render","render_gui_stuff",function()
     screenEnt = screenEnt or render.getScreenEntity()
+    if render.isInRenderView() then return end
     local snd = _snd
     if screenEnt then
         render.setColor(Color(255, 255, 255))
