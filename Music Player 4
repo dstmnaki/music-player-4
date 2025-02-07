@@ -198,8 +198,8 @@ local function drawMenu()
             
                 -- Apply text with alpha fade
                 render.setColor(colorRGB)
-                local ExtraText = song[2]:sub(36, 36) ~= "" and "..." or ""
-                render.drawText(20 + songList.x + sinOffset - alpha, yPos + 10, song[2]:sub(1, 33) .. ExtraText, TEXT_ALIGN.LEFT)
+                local ExtraText = song[2]:sub(35, 35) ~= "" and "..." or ""
+                render.drawText(20 + songList.x + sinOffset - alpha, yPos + 10, song[2]:sub(1, 32) .. ExtraText, TEXT_ALIGN.LEFT)
             end
             if secondPressCT != nil then
                 if timer.curtime()-secondPressCT > 0.3 then
