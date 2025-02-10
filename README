@@ -11,7 +11,7 @@ Features:
 Controls are displayed on the screen but i will list them here as well
 Mouse1 - Interact with buttons
 Mouse1 (Hold & Move) - Scroll song list & use volume slider
-Mouse1 (Double Tap) - Select song
+Mouse1 (Double Tap) - Select artits/song
 
 you can add songs to the included library nakilibs/musicplayer4/tracklist.txt with the following format
 "table.insert(tracks, {"URL", "NAME"})"
@@ -44,6 +44,7 @@ USAGE (See controls above):
 
 Click on the folder icon to view song list
 Hold down mouse1 and move your mouse up or down to scroll
+Double click on an artits to show their songs (Click the menu icon to go back to artist list)
 Double click on a song to play it
 Click Play/Pause button if you want to pause the song
 Adjust volume using the slider at the top (Hold mouse1 and move mouse left or right along the slider)
