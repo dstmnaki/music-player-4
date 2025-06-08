@@ -7,9 +7,7 @@
 enableHud(owner(),true)
 
 local x, y = render.getGameResolution()
-local centerTransform = Matrix()
-centerTransform:setTranslation(Vector(x, y, 0)/2)
-
+local x = x - 185
 require("nakilibs/musicplayer4/tracklist.txt")
 tracksSORTED = {}
 function sortByName(t)
@@ -39,8 +37,6 @@ local buffers = {"RT", "RT2"}
 local buffernum = 1
 render.createRenderTarget("RT")
 render.createRenderTarget("RT2")
-local centerTransform = Matrix()
-centerTransform:setTranslation(Vector(512, 512, 0))
 
 local songid = 1
 
@@ -393,7 +389,7 @@ hook.add("drawhud","render_gui_stuff",function()
                         local lx = width+pos
                         local ly = (current*512)
                         
-                        render.drawRect(x/2 + x2,y - ly/2,512/n,ly/2)
+                        render.drawRect((x+185)/2 + x2,y - ly/2,512/n,ly/2)
                     end
                 end
             --end
