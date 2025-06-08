@@ -325,6 +325,20 @@ local function drawMenu()
         render.setColor(Color(0,0,0,255))
         render.drawRoundedBox(10,x/2+325-90+12+40,y-65+8,40-8,40-8)
         
+        
+        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
+        render.drawRoundedBox(5,x/2+325-90+8+40+20-10,y-65+4+7.5,8,25)
+        
+        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
+        render.drawRoundedBox(5,x/2+325-90+8+40+20+2,y-65+4+7.5,8,25)
+        
+        
+        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
+        render.drawRoundedBox(5,x/2+325-90+8+4,y-65+6+7.5,25,8)
+        
+        render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
+        render.drawRoundedBox(5,x/2+325-90+8+4,y-65+18+7.5,25,8)
+        
     end
 end
 hook.add("think","",function()
