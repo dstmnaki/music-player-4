@@ -117,6 +117,15 @@ function runAll()
     hook.add("MouseWheeled","",function(delta)
         scroll = scroll - delta*35
     end)
+    
+    local menuTex = material.create("UnlitGeneric")
+    local menuTex2 = material.createFromImage("icon16/folder.png", "alphatest")
+    menuTex:setTexture("$basetexture", menuTex2:getName())
+    
+    local arrow = material.create("UnlitGeneric")
+    local arrow2 = material.createFromImage("icon16/control_end.png", "alphatest")
+    arrow:setTexture("$basetexture", arrow2:getName())
+    
     local function drawMenu()
         if menuOpen == nil then menuOpen = false end
         if menuMoveCT == nil then menuMoveCT = timer.curtime()-1 end
@@ -321,17 +330,11 @@ function runAll()
             
             
             render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
-            render.drawRoundedBox(5,x/2+325-90+8+40+20-10,y-65+4+7.5,8,25)
+            render.setMaterial(menuTex)
+            render.drawTexturedRect(x/2+325-90+10,y-65+10,40-10,40-10)
             
-            render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
-            render.drawRoundedBox(5,x/2+325-90+8+40+20+2,y-65+4+7.5,8,25)
-            
-            
-            render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
-            render.drawRoundedBox(5,x/2+325-90+8+4,y-65+6+7.5,25,8)
-            
-            render.setColor(Color((timer.curtime()*10+180)%360-180, 1, 1):hsvToRGB())  -- White for contrast
-            render.drawRoundedBox(5,x/2+325-90+8+4,y-65+18+7.5,25,8)
+            render.setMaterial(arrow)
+            render.drawTexturedRect(x/2+325-90+14+40,y-65+10,40-10,40-10)
             
         end
     end
