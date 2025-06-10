@@ -4,6 +4,7 @@
 --@client
 
 if CLIENT then
+local permissionSatisfied = hasPermission("bass.loadURL") and hasPermission("file.existsInGame") and hasPermission("file.read")
 parent = chip()
 
 holoStore = hologram.create(parent:localToWorld(Vector(0,0,0)), parent:localToWorldAngles(Angle(0,0,0)), "models/holograms/icosphere2.mdl", Vector(25))
@@ -16,12 +17,16 @@ local centerTransform = Matrix()
 centerTransform:setTranslation(Vector(x, y, 0)/2)
 
 require("nakilibs/musicplayer4/tracklist.txt")
+tracklistGet = tracklist2()
+bandNames = {}
+bandSet = {}  -- Helper table to track uniqueness
+
 function tracklist()
     -- Ensure the band names and songs are fetched properly with the fallback "Other/Misc"
-    local tracklistWithBands = tracklist2()  -- Fetch the original tracklist
+    local tracklistWithBands = tracklistGet  -- Fetch the original tracklist
     local returnTable = {}
     -- Modify the tracklist to ensure each track has a band, adding "Other/Misc" if needed
-    for _, song in ipairs(tracklist2()) do
+    for _, song in ipairs(tracklistWithBands) do
         local songDetails = song[2]  -- Format: "band - song name"
         local extractedBand, songName = songDetails:match("^(.-) %- (.+)$")
         if extractedBand == nil then
@@ -40,21 +45,9 @@ function tracklist()
     -- Return the modified tracklist
     return returnTable
 end
-local bandNames = {}
-local bandSet = {}  -- Helper table to track uniqueness
-
--- Extract unique band names
-for _, song in ipairs(tracklist()) do
-    local bandName = song[2]:match("^(.-) %- ") or song[2]  -- Extract band name
-
-    if not bandSet[bandName] then  -- Avoid duplicates
-        bandSet[bandName] = true
-        table.insert(bandNames, bandName)
-    end
-end
 
 -- Sort band names alphabetically
-table.sort(bandNames)
+
 function fetchSongs(band)
     local filteredTracks = {}  -- Stores songs matching the band
     local nameIndexMap = {}  -- Maps song names to original entries
@@ -120,15 +113,82 @@ function playURL(url2,name)
 end)
 
 end
-local permissionSatisfied = hasPermission("bass.loadURL")
 if permissionSatisfied then
-    --playURL(url,name)
+    local fileExists = file.existsInGame("data/starfall/musicplayer4/mytracklist.txt")
+    if fileExists then
+        local getFileData = file.readInGame("data/starfall/musicplayer4/mytracklist.txt")
+        if getFileData != nil then
+            local lines = string.explode("\n",getFileData,nil)
+            local linesCount = #lines
+            local lineIndex = 1
+            timer.create("addsongs",0.1,0,function()
+                lineIndex = lineIndex + 1
+                local this = lines[lineIndex]
+                if this != nil and this != "" then
+                    local line = string.explode("||",this,nil)
+                    if line != nil and line != "" then
+                        local lineURL = line[1]:sub(2,string.len(line[1])-1)
+                        local lineARTIST = line[2]:sub(2,string.len(line[2])-1)
+                        table.insert(tracklistGet,1,{lineURL,lineARTIST})
+                    end
+                end
+                if lineIndex >= linesCount then
+                    timer.remove("addsongs")
+                    
+                    -- Extract unique band names
+                    for _, song in ipairs(tracklist()) do
+                        local bandName = song[2]:match("^(.-) %- ") or song[2]  -- Extract band name
+                    
+                        if not bandSet[bandName] then  -- Avoid duplicates
+                            bandSet[bandName] = true
+                            table.insert(bandNames, bandName)
+                        end
+                    end
+                    table.sort(bandNames)
+                end
+            end)
+        end
+    end
 else
-setupPermissionRequest({"bass.loadURL"},"https://cdn.discordapp.com/attachments/", true)
+setupPermissionRequest({"bass.loadURL","file.existsInGame","file.read"},"Play music, Check for custom music library, Read custom music library", true)
 hook.add("permissionrequest", "", function()
-    permissionSatisfied = hasPermission("bass.loadURL")
+    permissionSatisfied = hasPermission("bass.loadURL") and hasPermission("file.existsInGame") and hasPermission("file.read")
     if permissionSatisfied == true then
-        --playURL(url,name)
+        local fileExists = file.existsInGame("data/starfall/musicplayer4/mytracklist.txt")
+        if fileExists then
+            local getFileData = file.readInGame("data/starfall/musicplayer4/mytracklist.txt")
+            if getFileData != nil then
+                local lines = string.explode("\n",getFileData,nil)
+                local linesCount = #lines
+                local lineIndex = 1
+                timer.create("addsongs",0.1,0,function()
+                    lineIndex = lineIndex + 1
+                    local this = lines[lineIndex]
+                    if this != nil and this != "" then
+                        local line = string.explode("||",this,nil)
+                        if line != nil and line != "" then
+                            local lineURL = line[1]:sub(2,string.len(line[1])-1)
+                            local lineARTIST = line[2]:sub(2,string.len(line[2])-1)
+                            table.insert(tracklistGet,1,{lineURL,lineARTIST})
+                        end
+                    end
+                    if lineIndex >= linesCount then
+                        timer.remove("addsongs")
+                        
+                        -- Extract unique band names
+                        for _, song in ipairs(tracklist()) do
+                            local bandName = song[2]:match("^(.-) %- ") or song[2]  -- Extract band name
+                        
+                            if not bandSet[bandName] then  -- Avoid duplicates
+                                bandSet[bandName] = true
+                                table.insert(bandNames, bandName)
+                            end
+                        end
+                        table.sort(bandNames)
+                    end
+                end)
+            end
+        end
     end
 end)
 end
@@ -655,7 +715,6 @@ hook.add("render","render_gui_stuff",function()
                         else
                             openMenu(!menuOpen)
                         end
-                        
                     end
                     local boxdata = {Vector(48/1.35+10+48,48/1.35,0),Vector(48,48,0)}
                     --render.drawRect(boxdata[1].x-boxdata[2].x/2,boxdata[1].y-boxdata[2].y/2,boxdata[2].x,boxdata[2].y)
