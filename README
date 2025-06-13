@@ -16,6 +16,9 @@ Mouse1 (Double Tap) - Select artits/song
 you can add songs to the included library nakilibs/musicplayer4/tracklist.txt with the following format
 "table.insert(tracks, {"URL", "NAME"})"
 
+!!NEW!! for the client side library (data/sf_filedata/musicplayer4/mytracklist.txt) you can add songs with the following format
+"URL"||"NAME"
+
 Requirements
 Starfall
 https://github.com/thegrb93/StarfallEx
