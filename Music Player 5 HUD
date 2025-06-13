@@ -2,11 +2,14 @@
 --@author Naki
 --@include nakilibs/musicplayer4/tracklist.txt
 --@client
-
+--@owneronly
+require("nakilibs/musicplayer4/tracklist.txt")
+tracklistGet = tracklist2()
 function runAll()
     local x, y = render.getGameResolution()
     local x = x - 185
-    require("nakilibs/musicplayer4/tracklist.txt")
+    
+    
     tracksSORTED = {}
     function sortByName(t)
         local nameIndexMap = {}  -- Map to link names to their original tables
@@ -14,8 +17,10 @@ function runAll()
     
         -- Extract names and store references to original tables
         for _, entry in ipairs(t) do
-            table.insert(names, entry[2])  -- Assuming entry[2] is the 'name'
-            nameIndexMap[entry[2]] = entry
+            if not table.hasValue(names,entry[2]) then
+                table.insert(names, entry[2])  -- Assuming entry[2] is the 'name'
+                nameIndexMap[entry[2]] = entry
+            end
         end
     
         -- Sort names alphabetically
@@ -26,8 +31,7 @@ function runAll()
             table.insert(tracksSORTED, nameIndexMap[name])
         end
     end
-    
-    sortByName(tracklist2())
+    sortByName(tracklistGet)
     function tracklist()
         return tracksSORTED
     end
@@ -401,15 +405,35 @@ function runAll()
     end)
 end
 
-if player() == owner() then
-    enableHud(owner(),true)
-    runAll()
+enableHud(owner(),true)
+tracklistGet = tracklist2()
+local fileExists = file.exists("musicplayer4/mytracklist.txt")
+if fileExists then
+    local getFileData = file.read("musicplayer4/mytracklist.txt")
+    if getFileData != nil then
+        local lines = string.explode("\n",getFileData,nil)
+        local linesCount = #lines
+        local lineIndex = 1
+        timer.create("addsongs",0.1,0,function()
+            lineIndex = lineIndex + 1
+            local this = lines[lineIndex]
+            if this != nil and this != "" then
+                local line = string.explode("||",this,nil)
+                if line != nil and line != "" then
+                    local lineURL = line[1]:sub(2,string.len(line[1])-1)
+                    local lineARTIST = line[2]:sub(2,string.len(line[2])-1)
+                    table.insert(tracklistGet,1,{lineURL,lineARTIST})
+                end
+            end
+            if lineIndex >= linesCount then
+                timer.remove("addsongs")
+                
+                runAll()
+            end
+        end)
+    else
+        runAll()
+    end
 else
-    setupPermissionRequest({"enablehud"}, "Enable Hud", true)
-    hook.add("permissionrequest","getPermissions",function()
-        if hasPermission("enablehud", true) then
-            enableHud(player(),true)
-            runAll()
-        end
-    end)
+    runAll()
 end
