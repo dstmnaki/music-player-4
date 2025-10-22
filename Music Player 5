@@ -4,7 +4,7 @@
 --@client
 
 if CLIENT then
-local permissionSatisfied = hasPermission("bass.loadURL") and hasPermission("file.existsInGame") and hasPermission("file.read")
+local permissionSatisfied = hasPermission("bass.loadURL") and hasPermission("bass.loadFile") and hasPermission("file.existsInGame") and hasPermission("file.read")
 parent = chip()
 
 holoStore = hologram.create(parent:localToWorld(Vector(0,0,0)), parent:localToWorldAngles(Angle(0,0,0)), "models/holograms/icosphere2.mdl", Vector(25))
@@ -187,9 +187,9 @@ end
 if permissionSatisfied then
     do_music_sorting_shit()
 else
-setupPermissionRequest({"bass.loadURL","file.exists","file.read"},"Play music, Check for custom music library, Read custom music library", true)
+setupPermissionRequest({"bass.loadURL","bass.loadFile","file.exists","file.read"},"Play music, Check for custom music library, Read custom music library", true)
 hook.add("permissionrequest", "", function()
-    permissionSatisfied = hasPermission("bass.loadURL") and hasPermission("file.exists") and hasPermission("file.read")
+    permissionSatisfied = hasPermission("bass.loadURL") and hasPermission("bass.loadFile") and hasPermission("file.exists") and hasPermission("file.read")
     if permissionSatisfied then
         do_music_sorting_shit()
     end
