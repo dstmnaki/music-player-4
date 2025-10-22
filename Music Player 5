@@ -37,7 +37,7 @@ function tracklist()
             extractedBand = "Other"
         end
         -- Update the song with the band name (song[2] should be in the form "band - song name")
-        table.insert(returnTable,{song[1],extractedBand.. " - " .. songName})
+        table.insert(returnTable,{song[1],(song[1]:sub(1,5)=="FILE:"and"[LOCAL] "or"")..extractedBand.. " - " .. songName})
     end
     
     -- Return the modified tracklist
@@ -167,7 +167,7 @@ function do_music_sorting_shit()
                         end
                         if not block then
                             local lineARTIST = line[2]:sub(2,string.len(line[2])-1)
-                            table.insert(tracklistGet,1,{lineURL,(lineURL:sub(1,5)=="FILE:"and"[LOCAL] "or"")..lineARTIST})
+                            table.insert(tracklistGet,1,{lineURL,lineARTIST})
                         end
                     end
                 end
