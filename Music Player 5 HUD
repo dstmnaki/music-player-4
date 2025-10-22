@@ -61,20 +61,40 @@ function runAll()
         if _snd != nil then 
             _snd:stop()
         end
-        bass.loadURL(url2,"2d noblock",function(snd)
-        _snd = snd
-        if snd != nil then
-            snd:play()
-            snd:setPos(chip():getPos())
-            snd:setVolume(0)
-            snd:setLooping(1)
-            
-            alpha = 0
-            alpha2 = 0
-            alpha3 = 0
-            playing = false
+        if url2:sub(1,5) == "FILE:" then
+            url2 = url2:sub(6,-1)
+            bass.loadFile(url2,"3d noblock",function(snd)
+                _snd = snd
+                if snd != nil then
+                    snd:play()
+                    snd:setPos(chip():getPos())
+                    snd:setFade(500,0)
+                    snd:setVolume(0)
+                    snd:setLooping(1)
+                    
+                    alpha = 0
+                    alpha2 = 0
+                    alpha3 = 0
+                    playing = false
+                end
+            end)
+        else
+            bass.loadURL(url2,"3d noblock",function(snd)
+                _snd = snd
+                if snd != nil then
+                    snd:play()
+                    snd:setPos(chip():getPos())
+                    snd:setFade(500,0)
+                    snd:setVolume(0)
+                    snd:setLooping(1)
+                    
+                    alpha = 0
+                    alpha2 = 0
+                    alpha3 = 0
+                    playing = false
+                end
+            end)
         end
-    end)
     
     end
     local permissionSatisfied = true
